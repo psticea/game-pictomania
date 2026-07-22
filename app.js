@@ -97,6 +97,7 @@ function init() {
 
   refreshAll();
 
+  document.getElementById("refreshAll").addEventListener("click", refreshAll);
   document.getElementById("dbCount").textContent =
     `${CARDS.usor.length} cărți ușoare · ${CARDS.mediu.length} cărți medii · ${(CARDS.usor.length + CARDS.mediu.length) * 7} cuvinte`;
 }

@@ -72,6 +72,23 @@ body {
 .btn-all:hover { filter: brightness(1.05); }
 .btn-all .ico { font-size: 18px; }
 
+.btn-fab {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 50;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(180deg, var(--accent) 0%, var(--accent-deep) 100%);
+  color: #3a2400;
+  padding: 13px 22px;
+  font-size: 16px;
+  box-shadow: 0 5px 0 #9c5c00, 0 10px 22px rgba(0,0,0,.5);
+}
+.btn-fab:hover { filter: brightness(1.05); }
+.btn-fab .ico { font-size: 19px; }
+
 /* ---------- Board / tray ---------- */
 .board {
   display: flex;
