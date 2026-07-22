@@ -71,7 +71,13 @@ function renderCard(slotIdx) {
     const row = document.createElement("div");
     row.className = "word";
     row.style.animationDelay = `${i * 35}ms`;
-    row.textContent = w;
+    const num = document.createElement("span");
+    num.className = "wnum";
+    num.textContent = i + 1;
+    const txt = document.createElement("span");
+    txt.className = "wtext";
+    txt.textContent = w;
+    row.append(num, txt);
     words.appendChild(row);
   });
 }
