@@ -101,12 +101,12 @@ body {
 .rownum {
   flex: 1;
   min-height: 52px;
-  width: 30px;
+  width: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: "Bangers", cursive;
-  font-size: 26px;
+  font-size: 34px;
   color: var(--accent);
   text-shadow: 0 1px 2px rgba(0,0,0,.6);
 }
@@ -247,10 +247,10 @@ body {
 }
 .slot-letter {
   font-family: "Bangers", cursive;
-  font-size: 30px;
+  font-size: 38px;
   color: var(--accent);
   background: #000;
-  width: 46px; height: 34px;
+  width: 56px; height: 42px;
   display: flex; align-items: center; justify-content: center;
   border-radius: 6px;
   box-shadow: inset 0 0 0 1px rgba(255,255,255,.06), 0 3px 8px rgba(0,0,0,.5);
