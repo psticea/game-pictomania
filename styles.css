@@ -236,6 +236,12 @@ body {
   border-bottom: 1px dashed rgba(0,0,0,.12);
   background: transparent;
 }
+.words {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
 .word {
   flex: 1;
   min-height: 62px;
@@ -301,10 +307,88 @@ body {
 }
 
 /* ---------- Responsive ---------- */
-@media (max-width: 560px) {
-  .rownum { font-size: 18px; width: 22px; }
-  .card-head { flex-direction: column; height: auto; gap: 6px; padding: 4px 0; }
-  .rownum-spacer { height: 96px; }
-  .diffseg button { padding: 5px 9px; font-size: 12px; }
-  .board { gap: 8px; padding: 16px 12px 22px; }
+
+/* Mesaj de rotire — telefon în portret */
+.rotate-hint { display: none; }
+
+@media (max-width: 820px) and (orientation: portrait) {
+  body { overflow: hidden; }
+  .topbar, .board, .footinfo, .btn-fab { display: none !important; }
+  .rotate-hint {
+    display: flex;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
+    text-align: center;
+    padding: 28px;
+    background: radial-gradient(1000px 600px at 50% 30%, #2a2a31 0%, #101014 70%);
+  }
+  .rotate-ico {
+    font-size: 72px;
+    animation: tilt 1.7s ease-in-out infinite;
+  }
+  .rotate-hint p {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.5;
+    color: #f4f1e6;
+  }
+}
+@keyframes tilt {
+  0%, 100% { transform: rotate(-12deg); }
+  50% { transform: rotate(78deg); }
+}
+
+/* Telefon în landscape — toate cele 3 cărți vizibile fără scroll */
+@media (orientation: landscape) and (max-height: 560px) {
+  html, body { height: 100%; }
+  body { padding: 4px 8px; min-height: 0; overflow: hidden; }
+  .topbar { margin-bottom: 3px; }
+  .topbar h1 { font-size: 22px; text-shadow: 0 1px 0 #7a4d00; }
+  .board {
+    flex: 1;
+    min-height: 0;
+    max-width: 100%;
+    width: 100%;
+    padding: 8px 8px 8px;
+    gap: 8px;
+    border-radius: 12px;
+  }
+  .card { padding: 5px; }
+  .card-head { height: auto; margin-bottom: 4px; gap: 5px; }
+  .diffseg { padding: 3px; border-radius: 8px; }
+  .diffseg button { padding: 5px 10px; font-size: 12px; }
+  .btn-refresh { width: 32px; height: 32px; font-size: 17px; border-radius: 9px; }
+  .slip { min-height: 0; }
+  .theme { display: none; }
+  .word {
+    min-height: 0;
+    font-size: clamp(11px, 3.4vh, 18px);
+    padding: 0 8px;
+  }
+  .wnum {
+    width: 24px; height: 24px;
+    font-size: 16px;
+    margin-right: 7px;
+  }
+  .card-foot { height: 30px; }
+  .slot-letter { font-size: 26px; width: 44px; height: 28px; }
+  .footinfo { display: none; }
+  .btn-fab {
+    padding: 8px 12px;
+    font-size: 13px;
+    border-radius: 10px;
+    bottom: 8px; right: 8px;
+    box-shadow: 0 3px 0 #9c5c00;
+  }
+}
+
+/* Telefon foarte mic în portret e deja acoperit de mesajul de rotire */
+@media (max-width: 560px) and (orientation: landscape) {
+  .board { gap: 6px; }
 }
