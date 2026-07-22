@@ -95,10 +95,6 @@ function refreshAll() {
 function init() {
   SLOTS.forEach((_, i) => board.appendChild(buildCard(i)));
 
-  // Numere și pe partea dreaptă (oglindă a coloanei din stânga)
-  const rightNums = board.querySelector(".rownums").cloneNode(true);
-  board.appendChild(rightNums);
-
   refreshAll();
 
   document.getElementById("dbCount").textContent =
