@@ -58,6 +58,7 @@ function renderCard(slotIdx) {
   const s = state[slotIdx];
   const card = CARDS[s.diff][s.index];
   const el = board.querySelector(`.card[data-slot="${slotIdx}"]`);
+  el.dataset.diff = s.diff;
 
   el.querySelectorAll(".diffseg button").forEach((b) => {
     b.classList.toggle("active", b.dataset.diff === s.diff);

@@ -123,6 +123,20 @@ body {
   box-shadow: inset 0 0 0 1px rgba(255,255,255,.04);
 }
 
+/* Culoarea cărții în funcție de dificultate */
+.card[data-diff="usor"] {
+  --card-top: #f4f1cb;
+  --card-bottom: #e6e28b;
+  --card-line: #ccc678;
+  --theme-ink: #7c7420;
+}
+.card[data-diff="mediu"] {
+  --card-top: #f8e0a2;
+  --card-bottom: #f0bd5f;
+  --card-line: #e2a848;
+  --theme-ink: #9a5813;
+}
+
 .card-head {
   height: 66px;
   display: flex;
@@ -197,7 +211,7 @@ body {
   font-size: 12px;
   letter-spacing: .4px;
   text-transform: uppercase;
-  color: #7c7420;
+  color: var(--theme-ink, #7c7420);
   padding: 6px 6px 4px;
   border-bottom: 1px dashed rgba(0,0,0,.18);
   background: linear-gradient(180deg, rgba(255,255,255,.35), transparent);
