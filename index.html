@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pictomania — Tablă cu cărți</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Bangers&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>Pictomania</h1>
+    <p class="subtitle">Tablă cu cărți — reîmprospătează fiecare carte după dificultate</p>
+    <div class="global-controls">
+      <button id="refreshAll" class="btn btn-all" title="Reîmprospătează toate cele 3 cărți">
+        <span class="ico">⟳</span> Cărți noi
+      </button>
+    </div>
+  </header>
+
+  <main class="board" id="board">
+    <!-- Coloana cu numere 1–7 -->
+    <div class="rownums" aria-hidden="true">
+      <div class="rownum-spacer"></div>
+      <div class="rownum">1</div>
+      <div class="rownum">2</div>
+      <div class="rownum">3</div>
+      <div class="rownum">4</div>
+      <div class="rownum">5</div>
+      <div class="rownum">6</div>
+      <div class="rownum">7</div>
+      <div class="rownum-spacer bottom"></div>
+    </div>
+    <!-- Cele 3 cărți se injectează din app.js -->
+  </main>
+
+  <footer class="footinfo">
+    <span id="dbCount"></span>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
