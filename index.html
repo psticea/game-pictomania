@@ -2,29 +2,53 @@
 <html lang="ro">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pictomania — Tablă cu cărți</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#111318" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <title>Pictomania — tabla de cuvinte</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Bangers&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=DM+Sans:opsz,wght@9..40,500;9..40,700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header class="topbar">
-    <h1>Pictomania</h1>
+  <header class="bar">
+    <h1 class="wordmark">Pictomania</h1>
+
+    <div class="bar-actions">
+      <p class="hint" aria-hidden="true"><kbd>1</kbd><kbd>2</kbd><kbd>3</kbd> o carte · <kbd>R</kbd> toate</p>
+      <button id="dealAll" class="btn btn-primary" type="button">
+        <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.6M20 4v4h-4"/></svg>
+        Cărți noi
+      </button>
+      <button id="fullscreen" class="btn btn-ghost" type="button" aria-label="Ecran complet" title="Ecran complet (F)">
+        <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
+      </button>
+    </div>
   </header>
 
-  <main class="board" id="board">
-    <!-- Cele 3 cărți se injectează din app.js -->
-  </main>
+  <main class="board" id="board"><!-- coloanele A/B/C sunt injectate din app.js --></main>
 
-  <footer class="footinfo">
-    <span id="dbCount"></span>
-  </footer>
+  <div id="live" class="sr-only" role="status" aria-live="polite"></div>
 
-  <button id="refreshAll" class="btn btn-fab" title="Schimbă toate cele 3 cărți">
-    <span class="ico">⟳</span> Schimbă tot
-  </button>
+  <template id="colTpl">
+    <section class="col">
+      <header class="col-head">
+        <span class="col-letter"></span>
+        <div class="col-tools">
+          <div class="seg" role="group">
+            <button type="button" class="seg-btn" data-diff="usor">Ușor</button>
+            <button type="button" class="seg-btn" data-diff="mediu">Mediu</button>
+          </div>
+          <button type="button" class="deal" aria-label="Carte nouă">
+            <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.6M20 4v4h-4"/></svg>
+          </button>
+        </div>
+        <p class="col-theme"></p>
+      </header>
+      <ol class="list"></ol>
+    </section>
+  </template>
 
   <script src="data.js"></script>
   <script src="app.js"></script>

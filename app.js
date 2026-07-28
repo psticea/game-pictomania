@@ -1,105 +1,185 @@
-// Logica tablei Pictomania.
-// 3 cărți (A, B, C). Fiecare are dificultate proprie (usor/mediu) și buton de
-// reîmprospătare. Butonul global "Cărți noi" schimbă toate cele 3 cărți.
+/* ============================================================
+   Pictomania — logica tablei
+   3 coloane (A, B, C) × 7 rânduri. Fiecare coloană are propria
+   dificultate și se împarte independent.
+   Zero dependențe: tabla trebuie să meargă și fără internet,
+   pe o tabletă din mijlocul mesei.
+   ============================================================ */
 
 const SLOTS = ["A", "B", "C"];
-const DEFAULT_DIFF = "usor";
-
-// Starea curentă a fiecărei cărți: dificultatea aleasă și indexul temei afișate.
-const state = SLOTS.map(() => ({ diff: DEFAULT_DIFF, index: null }));
+const STORE_KEY = "pictomania.diff";
 
 const board = document.getElementById("board");
+const tpl = document.getElementById("colTpl");
+const live = document.getElementById("live");
 
-function randomIndex(diff, exclude) {
-  const n = CARDS[diff].length;
-  if (n <= 1) return 0;
-  let i;
-  do { i = Math.floor(Math.random() * n); } while (i === exclude);
-  return i;
+const state = SLOTS.map(() => ({ diff: "usor", index: null }));
+const views = [];
+
+restoreDifficulty();
+
+/* ------------------------------------------------------------------ date */
+
+function themesInUse(exceptSlot) {
+  const used = new Set();
+  state.forEach((s, i) => {
+    if (i !== exceptSlot && s.index !== null) used.add(CARDS[s.diff][s.index].tema);
+  });
+  return used;
 }
 
-function buildCard(slotIdx) {
-  const el = document.createElement("section");
-  el.className = "card";
-  el.dataset.slot = slotIdx;
-  el.innerHTML = `
-    <div class="card-head">
-      <div class="diffseg" role="group" aria-label="Dificultate">
-        <button data-diff="usor">Ușor</button>
-        <button data-diff="mediu">Mediu</button>
-      </div>
-      <button class="btn-refresh" title="Carte nouă" aria-label="Carte nouă">⟳</button>
-    </div>
-    <div class="slip">
-      <div class="theme"></div>
-      <div class="words"></div>
-    </div>
-    <div class="card-foot"><div class="slot-letter">${SLOTS[slotIdx]}</div></div>
-  `;
+// Două coloane cu aceeași temă ar strica runda, deci temele nu se repetă
+// niciodată pe tablă — și nici cartea proprie nu se repetă la reîmpărțire.
+function pickIndex(slot) {
+  const s = state[slot];
+  const pool = CARDS[s.diff];
+  const taken = themesInUse(slot);
+  const current = s.index !== null ? pool[s.index]?.tema : null;
+  const all = pool.map((_, i) => i);
 
-  el.querySelectorAll(".diffseg button").forEach((b) => {
+  let choices = all.filter((i) => !taken.has(pool[i].tema) && pool[i].tema !== current);
+  if (!choices.length) choices = all.filter((i) => !taken.has(pool[i].tema));
+  if (!choices.length) choices = all;
+
+  return choices[Math.floor(Math.random() * choices.length)];
+}
+
+function restoreDifficulty() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORE_KEY));
+    if (Array.isArray(saved)) {
+      saved.forEach((d, i) => {
+        if (state[i] && CARDS[d]) state[i].diff = d;
+      });
+    }
+  } catch { /* prima rulare sau storage blocat — rămân valorile implicite */ }
+}
+
+function saveDifficulty() {
+  try {
+    localStorage.setItem(STORE_KEY, JSON.stringify(state.map((s) => s.diff)));
+  } catch { /* modul privat poate refuza scrierea; nu e critic */ }
+}
+
+/* ---------------------------------------------------------------- randare */
+
+function buildColumn(slot) {
+  const el = tpl.content.firstElementChild.cloneNode(true);
+  el.setAttribute("aria-label", `Cartea ${SLOTS[slot]}`);
+  el.querySelector(".col-letter").textContent = SLOTS[slot];
+
+  const list = el.querySelector(".list");
+  for (let i = 0; i < 7; i++) {
+    const li = document.createElement("li");
+    li.className = "row";
+    li.style.setProperty("--i", i);
+    li.innerHTML = '<span class="idx"></span><span class="w"></span>';
+    li.querySelector(".idx").textContent = i + 1;
+    list.appendChild(li);
+  }
+
+  const segButtons = [...el.querySelectorAll(".seg-btn")];
+  segButtons.forEach((b) => {
     b.addEventListener("click", () => {
-      state[slotIdx].diff = b.dataset.diff;
-      refreshCard(slotIdx, true);
+      if (state[slot].diff === b.dataset.diff) return;
+      state[slot].diff = b.dataset.diff;
+      saveDifficulty();
+      deal(slot);
     });
   });
-  el.querySelector(".btn-refresh").addEventListener("click", (e) => {
-    refreshCard(slotIdx, true);
-    const btn = e.currentTarget;
-    btn.classList.remove("spin");
-    void btn.offsetWidth; // restart animația
-    btn.classList.add("spin");
-  });
 
-  return el;
+  const dealBtn = el.querySelector(".deal");
+  dealBtn.addEventListener("click", () => deal(slot));
+
+  board.appendChild(el);
+  views[slot] = {
+    el,
+    segButtons,
+    dealBtn,
+    theme: el.querySelector(".col-theme"),
+    words: [...el.querySelectorAll(".w")],
+    list,
+  };
 }
 
-function renderCard(slotIdx) {
-  const s = state[slotIdx];
+function render(slot) {
+  const s = state[slot];
+  const v = views[slot];
   const card = CARDS[s.diff][s.index];
-  const el = board.querySelector(`.card[data-slot="${slotIdx}"]`);
-  el.dataset.diff = s.diff;
 
-  el.querySelectorAll(".diffseg button").forEach((b) => {
-    b.classList.toggle("active", b.dataset.diff === s.diff);
-  });
+  v.el.dataset.diff = s.diff;
+  v.theme.textContent = card.tema;
+  v.segButtons.forEach((b) =>
+    b.setAttribute("aria-pressed", String(b.dataset.diff === s.diff))
+  );
+  card.cuvinte.forEach((word, i) => { v.words[i].textContent = word; });
 
-  el.querySelector(".theme").textContent = card.tema;
-  const words = el.querySelector(".words");
-  words.innerHTML = "";
-  card.cuvinte.forEach((w, i) => {
-    const row = document.createElement("div");
-    row.className = "word";
-    row.style.animationDelay = `${i * 35}ms`;
-    const num = document.createElement("span");
-    num.className = "wnum";
-    num.textContent = i + 1;
-    const txt = document.createElement("span");
-    txt.className = "wtext";
-    txt.textContent = w;
-    row.append(num, txt);
-    words.appendChild(row);
-  });
+  // Repornește animația de împărțire.
+  v.list.classList.remove("dealing");
+  void v.list.offsetWidth;
+  v.list.classList.add("dealing");
 }
 
-function refreshCard(slotIdx, forceNew) {
-  const s = state[slotIdx];
-  s.index = randomIndex(s.diff, forceNew ? s.index : null);
-  renderCard(slotIdx);
+function deal(slot, announce = true) {
+  const s = state[slot];
+  s.index = pickIndex(slot);
+  render(slot);
+
+  const btn = views[slot].dealBtn;
+  btn.classList.remove("spin");
+  void btn.offsetWidth;
+  btn.classList.add("spin");
+
+  if (announce) {
+    live.textContent = `Cartea ${SLOTS[slot]}: ${CARDS[s.diff][s.index].tema}`;
+  }
 }
 
-function refreshAll() {
-  SLOTS.forEach((_, i) => refreshCard(i, true));
+function dealAll() {
+  SLOTS.forEach((_, i) => deal(i, false));
+  live.textContent = "Trei cărți noi împărțite.";
 }
 
-function init() {
-  SLOTS.forEach((_, i) => board.appendChild(buildCard(i)));
+/* ------------------------------------------------- ecran complet + veghe */
 
-  refreshAll();
-
-  document.getElementById("refreshAll").addEventListener("click", refreshAll);
-  document.getElementById("dbCount").textContent =
-    `${CARDS.usor.length} cărți ușoare · ${CARDS.mediu.length} cărți medii · ${(CARDS.usor.length + CARDS.mediu.length) * 7} cuvinte`;
+async function toggleFullscreen() {
+  try {
+    if (document.fullscreenElement) await document.exitFullscreen();
+    else await document.documentElement.requestFullscreen();
+  } catch { /* iOS Safari nu permite fullscreen pe document; ignorăm */ }
 }
 
-init();
+// Tableta din mijlocul mesei nu are voie să adoarmă în mijlocul rundei.
+let wakeLock = null;
+async function keepAwake() {
+  if (!("wakeLock" in navigator)) return;
+  try {
+    wakeLock = await navigator.wakeLock.request("screen");
+    wakeLock.addEventListener("release", () => { wakeLock = null; });
+  } catch { /* refuzat sau baterie critică — jocul merge oricum */ }
+}
+
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === "visible" && !wakeLock) keepAwake();
+});
+
+/* -------------------------------------------------------------- pornire */
+
+SLOTS.forEach((_, i) => buildColumn(i));
+SLOTS.forEach((_, i) => deal(i, false));
+
+document.getElementById("dealAll").addEventListener("click", dealAll);
+document.getElementById("fullscreen").addEventListener("click", toggleFullscreen);
+
+document.addEventListener("keydown", (e) => {
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  if (e.target.closest("input, textarea")) return;
+
+  if (e.key >= "1" && e.key <= "3") { deal(Number(e.key) - 1); return; }
+  const k = e.key.toLowerCase();
+  if (k === "r") { dealAll(); return; }
+  if (k === "f") { toggleFullscreen(); }
+});
+
+// Wake Lock cere un gest al utilizatorului în majoritatea browserelor.
+document.addEventListener("pointerdown", keepAwake, { once: true });
