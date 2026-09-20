@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="An evidence-led UI, usability, and Romanian content review of the Pictomania shared-screen word board.">
+  <link rel="icon" href="data:,">
+  <title>Pictomania | UI &amp; content review | 20 September 2026</title>
+  <style>
+    :root {
+      --paper: #faf8f3;
+      --surface: #ffffff;
+      --ink: #22262a;
+      --muted: #575e64;
+      --line: #d7d9d5;
+      --accent: #7e2754;
+      --link: #155c78;
+      --p1: #843019;
+      --p2: #705214;
+      --p3: #365863;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-padding-top: 24px; }
+    body { margin: 0; background: var(--paper); color: var(--ink); font: 17px/1.7 system-ui, -apple-system, "Segoe UI", sans-serif; }
+    a { color: var(--link); text-underline-offset: .2em; }
+    a:hover { text-decoration-thickness: 2px; }
+    a:focus-visible, summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 5px; }
+    .skip { position: absolute; top: -80px; left: 20px; padding: 10px 20px; background: white; z-index: 2; }
+    .skip:focus { top: 12px; }
+    .masthead { padding: 48px max(24px, calc((100vw - 1280px) / 2)); background: #171d22; color: #f9f8f3; }
+    .masthead h1 { max-width: 900px; margin: 0 0 20px; font: 600 clamp(2.2rem, 5vw, 4.2rem)/1.08 Georgia, "Times New Roman", serif; letter-spacing: -.025em; }
+    .masthead p { max-width: 800px; margin: 0; color: #d4dce1; font-size: 1.1rem; }
+    .meta { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-top: 28px; color: #d4dce1; font-size: .85rem; }
+    .layout { max-width: 1328px; margin: auto; display: grid; grid-template-columns: 210px minmax(0, 1fr); gap: 56px; padding: 42px 24px 64px; }
+    .contents { align-self: start; position: sticky; top: 24px; font-size: .9rem; }
+    .contents strong { display: block; margin-bottom: 12px; }
+    .contents a { display: block; padding: 7px 0; text-decoration: none; }
+    .contents .download { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line); }
+    main { min-width: 0; }
+    section { margin-bottom: 64px; }
+    h2 { margin: 0 0 20px; padding-top: 18px; border-top: 2px solid var(--ink); font: 600 clamp(1.65rem, 3vw, 2.25rem)/1.2 Georgia, "Times New Roman", serif; }
+    h3 { margin: 30px 0 12px; font-size: 1.22rem; line-height: 1.35; }
+    h4 { margin: 24px 0 8px; font-size: 1rem; }
+    p, ul, ol { max-width: 76ch; margin: 0 0 18px; }
+    li { margin-bottom: 9px; }
+    ul, ol { padding-left: 24px; }
+    .lead { font-size: 1.25rem; line-height: 1.6; }
+    .note { padding: 20px 24px; background: #efeee7; border: 1px solid var(--line); margin: 22px 0; }
+    .note p:last-child { margin-bottom: 0; }
+    .method { font-size: .85rem; color: var(--muted); }
+    .method strong { color: var(--ink); }
+    .priority { display: inline-block; font: 750 .75rem/1.4 system-ui, sans-serif; padding: 3px 7px; margin-right: 7px; border: 1px solid currentColor; vertical-align: .15em; white-space: nowrap; }
+    .p1 { color: var(--p1); }
+    .p2 { color: var(--p2); }
+    .p3 { color: var(--p3); }
+    .finding { padding-bottom: 24px; margin-bottom: 26px; border-bottom: 1px solid var(--line); }
+    .finding h3 { margin-top: 16px; }
+    .source { color: var(--muted); font-size: .88rem; }
+    .accept { padding: 14px 18px; background: #edf2f2; font-size: .95rem; }
+    .finding p:last-child { margin-bottom: 0; }
+    code { font: .87em/1.5 ui-monospace, Consolas, monospace; overflow-wrap: anywhere; }
+    .table-wrap { overflow-x: auto; margin: 20px 0 26px; border: 1px solid var(--line); }
+    table { width: 100%; border-collapse: collapse; background: var(--surface); font-size: .9rem; line-height: 1.55; }
+    caption { text-align: left; padding: 14px 16px; font-weight: 700; background: #efeee7; }
+    th, td { padding: 13px 15px; vertical-align: top; text-align: left; border-bottom: 1px solid var(--line); }
+    th { background: #edf0ee; font-weight: 700; }
+    tr:last-child td { border-bottom: 0; }
+    td small { display: block; color: var(--muted); margin-top: 4px; }
+    .compact { white-space: nowrap; }
+    figure { margin: 26px 0; }
+    figure img { display: block; width: 100%; height: auto; border: 1px solid #bbc3c8; background: #171d22; }
+    figcaption { margin-top: 10px; color: var(--muted); font-size: .88rem; line-height: 1.55; }
+    .phones { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 690px; }
+    .phones figure { margin-top: 0; }
+    .phones img { max-height: 680px; object-fit: contain; object-position: top; background: #e9ece8; }
+    blockquote { margin: 16px 0; padding: 18px 22px; border: 1px solid var(--line); background: white; font-size: 1rem; }
+    blockquote p:last-child { margin-bottom: 0; }
+    details { border: 1px solid var(--line); padding: 18px 22px; margin: 20px 0; background: white; }
+    summary { cursor: pointer; font-weight: 700; }
+    details[open] summary { margin-bottom: 18px; }
+    footer { color: var(--muted); border-top: 1px solid var(--line); padding-top: 24px; font-size: .88rem; }
+    @media (max-width: 1050px) {
+      .layout { grid-template-columns: 1fr; gap: 30px; max-width: 1000px; }
+      .contents { position: static; display: flex; flex-wrap: wrap; gap: 2px 20px; border-bottom: 1px solid var(--line); padding-bottom: 20px; }
+      .contents strong { flex-basis: 100%; }
+      .contents .download { margin: 0; padding: 7px 0; border: 0; }
+    }
+    @media (max-width: 600px) {
+      body { font-size: 16px; }
+      .masthead { padding: 32px 20px; }
+      .layout { padding: 28px 20px 48px; }
+      .lead { font-size: 1.12rem; }
+      .phones { gap: 16px; }
+      th, td { padding: 10px 12px; }
+      section { margin-bottom: 46px; }
+      .note { padding: 16px; }
+    }
+    @media print {
+      body { background: white; font-size: 10pt; line-height: 1.5; }
+      .masthead { padding: 0 0 20px; background: white; color: black; }
+      .masthead p, .meta { color: #333; }
+      .masthead h1 { font-size: 30pt; }
+      .layout { display: block; padding: 0; }
+      .contents, .skip { display: none; }
+      section { margin-bottom: 28px; }
+      h2, h3, h4 { break-after: avoid; }
+      figure, tr, .accept { break-inside: avoid; }
+      .table-wrap { overflow: visible; }
+      a { color: black; }
+      .phones img { max-height: 400px; }
+    }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip">Skip to the review</a>
+  <header class="masthead">
+    <h1>Pictomania: <br>keep the board, strengthen the game.</h1>
+    <p>A detailed UI, usability, and Romanian content review. The visual direction is already distinctive; the next gains are safer rounds, dependable reading, and better-curated cards.</p>
+    <div class="meta">
+      <span>20 September 2026</span>
+      <span>Latest main: <code>59a2e1b</code></span>
+      <span>Includes requested commit <code>4a1fa36</code></span>
+      <span>Evaluation only &mdash; application code unchanged</span>
+    </div>
+  </header>
+  <div class="layout">
+    <nav class="contents" aria-label="Review sections">
+      <strong>In this review</strong>
+      <a href="#verdict">Verdict &amp; priorities</a>
+      <a href="#strengths">What to preserve</a>
+      <a href="#findings">Detailed findings</a>
+      <a href="#content">Content &amp; copy</a>
+      <a href="#responsive">Responsive evidence</a>
+      <a href="#journey">Player experience</a>
+      <a href="#roadmap">Recommended sequence</a>
+      <a href="#validation">Flows &amp; acceptance tests</a>
+      <a href="#method">Method &amp; limitations</a>
+      <a class="download" href="evidence.json">Machine-readable evidence</a>
+    </nav>
+    <main id="main">
+      <p class="method"><strong>&#9888; DEGRADED: single-context (direct review of the compact implementation; no independent dual-agent assessment).</strong> Live browser inspection and automated checks were performed. <a href="#method">Scope and limitations</a>.</p>
+      <section id="verdict">
+        <h2>The verdict</h2>
+        <p class="lead"><strong>Do not redesign this into a conventional game dashboard.</strong> The three-column signal board is the right idea for people drawing and glancing up from a table. Keep its speed, its large words, and its redundant letter/color system. Make the active round harder to lose, the mobile compromises explicit, and the card combinations fairer.</p>
+        <p>The biggest problem is not that the site looks unfinished. It is that the interface presents a confident, stable board while the underlying experience is fragile: one key can replace it, reload loses it, duplicated prompts can appear across columns, and unsupported device features fail silently.</p>
+        <div class="note">
+          <p><strong>Product lens:</strong> a Romanian word-board companion for 3&ndash;6 friends using physical Pictomania components, with one tablet or laptop read from roughly a metre away. This is an <em>operate</em> surface, not a marketing page. Recommendations optimize uninterrupted play rather than sign-ups, decorative features, or more chrome.</p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <caption>The five highest-value improvements</caption>
+            <thead><tr><th scope="col">Priority</th><th scope="col">Change</th><th scope="col">Why it comes first</th><th scope="col">Scope</th></tr></thead>
+            <tbody>
+              <tr><td class="compact"><span class="priority p1">P1</span></td><td><a href="#f1">Protect and restore the active board</a></td><td>Accidental dealing and reload can invalidate a live round. There is no undo.</td><td>UI + state</td></tr>
+              <tr><td class="compact"><span class="priority p1">P1</span></td><td><a href="#f2">Prevent identical prompts across columns</a></td><td>Different themes can share up to four words; distinct themes are not enough.</td><td>Selection + content</td></tr>
+              <tr><td class="compact"><span class="priority p1">P1</span></td><td><a href="#f3">Design for actual reading distance</a></td><td>At 320px wide, words are 15.68px and row numbers 9.41px. Fitting is not the same as being readable from a table.</td><td>Responsive UI</td></tr>
+              <tr><td class="compact"><span class="priority p2">P2</span></td><td><a href="#f5">Enlarge controls and strengthen keyboard access</a></td><td>Most column controls are below the product's 44px target; focus is weak on the colored headers.</td><td>UI + accessibility</td></tr>
+              <tr><td class="compact"><span class="priority p2">P2</span></td><td><a href="#f6">Calibrate difficulty and session novelty</a></td><td>“Mediu” mixes easy concrete objects with abstract or specialist prompts, while replay repeats arrive early.</td><td>Content + dealing policy</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="source">P1 = significant risk to a core round or reading task; P2 = meaningful friction or exclusion; P3 = polish. No P0 outage was observed. Effort estimates later in this report are relative, not delivery commitments.</p>
+      </section>
+
+      <section id="strengths">
+        <h2>What is already working</h2>
+        <p><strong>The design is specific to the job.</strong> Its scoreboard-like composition, colored coordinates, condensed display type, and lack of navigation suit shared-table play. It does not look like an interchangeable SaaS template.</p>
+        <ul>
+          <li><strong>The complete board is immediately available.</strong> There is no account, modal, setup wizard, loading shell, or screen transition before seeing the 21 words. Local loading and all ordinary core actions worked.</li>
+          <li><strong>Column identity is strong.</strong> A/B/C plus amber/cyan/magenta is much safer than color alone. Repeating the row numbers in each column reduces eye travel. Keep both forms of identification.</li>
+          <li><strong>Text contrast is excellent on the main reading surface.</strong> Measured white-on-base contrast was approximately 16.29:1. Large letter contrast on the solid headers ranged from 7.55:1 to 10.36:1. These are targeted measurements, not a full accessibility certification.</li>
+          <li><strong>The implementation is appropriately small.</strong> The five app assets total 32,766 bytes before fonts and HTTP overhead. No framework or build tool is necessary. Do not add one just to make these improvements.</li>
+          <li><strong>Useful accessibility foundations exist.</strong> Real buttons, Romanian document language, named column regions, ordered lists, selected-state announcements, a polite status region, visible focus styles, and a reduced-motion alternative are already present.</li>
+        </ul>
+        <figure>
+          <a href="screenshots/02-desktop-1440.png"><img src="screenshots/02-desktop-1440.png" alt="Pictomania at 1440 by 900: three full-height colored columns, large Romanian words, a patterned medium-difficulty header, and top-right dealing controls." width="1440" height="900"></a>
+          <figcaption>Desktop, 1440 &times; 900, after ordinary interactions. All 21 words remain visible. The focused fullscreen button shows the strong focus appearance on the dark top bar; the colored headers have a different contrast problem.</figcaption>
+        </figure>
+      </section>
+
+      <section id="findings">
+        <h2>Detailed findings</h2>
+        <article class="finding" id="f1">
+          <h3><span class="priority p1">P1</span> Protect the active round before adding features</h3>
+          <p><strong>Observed:</strong> the all-card button, per-column buttons, difficulty selectors, and the global <code>R</code>/<code>1</code>/<code>2</code>/<code>3</code> keys immediately change the board. None can be undone. A reload kept the selected difficulties but replaced all three cards. Only <code>pictomania.diff</code> is persisted.</p>
+          <p><strong>Why it matters:</strong> the board is shared reference material, not disposable search results. A stray key or touch can make everyone's assigned word disappear in the middle of drawing. The UI has no concept of “we are playing with these cards now.”</p>
+          <p><strong>Recommendation:</strong> first add one-step restoration for every board-changing action, including difficulty changes, and save the current board using stable card IDs. Then introduce a lightweight <span lang="ro">“Blochează tabla”</span> action: while locked, disable dealing and difficulty changes, including their shortcuts. Keep setup fast; do not show a confirmation dialog on every normal deal.</p>
+          <p>A compact preparation/play distinction would also let management controls recede during a round without removing coordinate labels. “New round” should be an intentional action; reloading should restore, not silently redeal.</p>
+          <p class="accept"><strong>Done when:</strong> a mistaken single-card, all-card, or difficulty change can restore the exact previous 21 words and difficulty states; reload restores the active board; a locked round cannot be changed by pointer or keyboard.</p>
+          <p class="source">Evidence: <code>app.js:10&ndash;19, 47&ndash;62, 81&ndash;88, 123&ndash;140, 168&ndash;182</code>. Browser reload and shortcut flows reproduced the behavior. Confidence: high.</p>
+        </article>
+
+        <article class="finding" id="f2">
+          <h3><span class="priority p1">P1</span> Enforce distinct prompts, not just distinct themes</h3>
+          <p><strong>Observed:</strong> <code>pickIndex()</code> excludes the other columns' theme names but never compares their words. “Animale de companie” and “Animale mici de casă” are allowed together despite sharing <span lang="ro">Hamster, Broască țestoasă, Iepure</span>, and <span lang="ro">Peștișor</span>.</p>
+          <p><strong>Why it matters:</strong> a duplicated prompt makes a drawing less informative about the intended coordinate and can create avoidable confusion. This is a content-selection problem with a direct effect on the fairness and clarity of play, not merely database tidiness.</p>
+          <p><strong>Recommendation:</strong> choose a compatible set of three cards as a unit. Reject exact normalized word collisions across the visible board. Define an editorial policy for synonyms and ambiguous homonyms separately; for example, “Rachetă” can mean different things in different categories. Keep each card's themed seven-word structure rather than randomly mixing unrelated words to remove collisions.</p>
+          <p class="accept"><strong>Done when:</strong> every dealt board contains 21 distinct normalized prompts; a single-column replacement remains compatible with the other two; an exhausted eligible pool produces an explicit, recoverable choice rather than silently breaking the rule.</p>
+          <p class="source">Evidence: <code>app.js:23&ndash;44</code>; <code>data.js</code>, the two animal cards. Seeded 10,000-board simulations using the actual selector found collisions on 672 all-easy boards, 277 all-medium boards, and 414 mixed easy/medium/easy boards. These are synthetic samples, not measured real-user incidence. Confidence: high.</p>
+          <figure>
+            <a href="screenshots/05-duplicate-words.png"><img loading="lazy" src="screenshots/05-duplicate-words.png" alt="An allowed board containing Animale de companie and Animale mici de casă, showing four identical words across columns A and B." width="1440" height="900"></a>
+            <figcaption>Diagnostic fixture using existing cards and the existing renderer. The two animal themes are a legal combination under the current selection rules; the fixture was selected explicitly to make their four overlaps visible.</figcaption>
+          </figure>
+        </article>
+
+        <article class="finding" id="f3">
+          <h3><span class="priority p1">P1</span> Treat reading distance as a requirement, not just screen fit</h3>
+          <p><strong>Observed:</strong> with the intended web fonts, all 100 cards fitted within their rows across seven tested viewport sizes. That is a real strength. However, at 390 &times; 844, the words are 19.11px and indices 11.47px; at 320 &times; 568, they are 15.68px and 9.41px. Several long words split mid-word in the narrow columns.</p>
+          <p><strong>Why it matters:</strong> your own product brief says players should not lean in from roughly a metre away. The row number is half of the coordinate, not incidental metadata. Tiny indices and broken words undermine rapid “C5” lookup even when no element technically overflows.</p>
+          <p><strong>Recommendation:</strong> keep the three simultaneous columns on the shared board; do not stack them into a long scrolling page. Give indices a stronger minimum size and a more consistent gutter. Provide an optional table-display setting that reduces setup chrome and allocates more space to the board. On small phones, communicate that this is a close-up view and recommend a larger shared screen.</p>
+          <p>Do not promise that rotation solves everything: at 844 &times; 390 the measured word size is still 19.11px. Landscape improves line length in this layout, not necessarily the viewing distance. Compare uppercase Oswald against a slightly less condensed or mixed-case option in a short reading test before replacing the established typography.</p>
+          <p class="accept"><strong>Done when:</strong> all 21 coordinates and prompts remain visible with the longest cards; numbers are easy to acquire; real players can locate random coordinates on the intended tablet/laptop from the intended distance without leaning in. Set the timing target from that test, not from a guessed universal pixel threshold.</p>
+          <p class="source">Evidence: <code>styles.css:35&ndash;36, 307&ndash;335, 388&ndash;425</code>; full-deck geometry sweep. Physical distance, glare, and viewing-angle performance were not tested. Confidence: high for dimensions; medium for the real-world effect pending a table test.</p>
+        </article>
+
+        <article class="finding" id="f4">
+          <h3><span class="priority p2">P2</span> Preserve category context and explain the companion role</h3>
+          <p><strong>Observed:</strong> theme names disappear at widths of 720px and below, and in short landscape layouts. The page contains no brief explanation of what the board replaces or how coordinates are used. The only instructional copy is the keyboard hint, which itself disappears below 900px and is hidden from assistive technology.</p>
+          <p><strong>Why it matters:</strong> category names help disambiguate words such as <span lang="ro">“Bancă”</span> and <span lang="ro">“Rachetă”</span>. Hiding them changes the information available to phone users. A newcomer can also reasonably mistake this for a complete digital game and look for word assignment, drawing, or scoring tools that are not part of the app.</p>
+          <p><strong>Recommendation:</strong> retain a short theme label where it fits, or make full category text easy to reveal without changing a card. Add a small <span lang="ro">“Cum folosești tabla”</span> help disclosure, not a mandatory tutorial or permanent paragraph over the game. Explain that it is a word board used alongside the game, and show one coordinate example.</p>
+          <p class="accept"><strong>Done when:</strong> a first-time visitor can identify the site's limited role, find a requested coordinate, and discover each card's theme at every supported size. Existing players can ignore the help entirely.</p>
+          <p class="source">Evidence: <code>index.html:19, 31&ndash;50</code>; <code>styles.css:267&ndash;277, 367&ndash;381, 419&ndash;425</code>. Confidence: high.</p>
+        </article>
+
+        <article class="finding" id="f5">
+          <h3><span class="priority p2">P2</span> Make controls comfortable to hit and unambiguous to navigate</h3>
+          <p><strong>Observed:</strong> desktop difficulty buttons are 38px high; the card-deal button is 44 &times; 38px. Phone portrait difficulty buttons are 32px high and the deal button 38 &times; 34px. Landscape shrinks some controls to 30px high. These fall short of the project's own 44px target, although that alone is <em>not</em> proof of failure of WCAG's 24px minimum-target criterion.</p>
+          <p><strong>Keyboard:</strong> all 11 controls are reachable with Tab, and focus is strong against the dark bar. But the shared light-cyan focus color measures only approximately 1.33:1, 1.45:1, and 1.82:1 against the three solid colored headers. Strengthen it there with a dark or two-tone outline and verify the actual focused control.</p>
+          <p><strong>Names and shortcuts:</strong> the three deal buttons all announce <span lang="ro">“Carte nouă”</span>; their containing regions provide context, but a screen-reader button list loses that context. The difficulty groups have no accessible names. Global single-character shortcuts cannot be disabled or remapped and are not limited to a focused control, creating a WCAG 2.1.4 concern as well as an accidental-action risk.</p>
+          <p><strong>Recommendation:</strong> use at least 44 &times; 44px hit areas where the product promises them. Name controls <span lang="ro">“Carte nouă pentru A”</span> and groups <span lang="ro">“Dificultate pentru cartea A”</span>. Offer shortcut settings or focus-scoped activation, expose instructions accessibly, and prevent key-repeat from dealing many cards when a key is held.</p>
+          <p class="accept"><strong>Done when:</strong> controls are comfortable on a real tablet, focus remains clearly visible on every header, accessible names identify the target column, and single-letter shortcuts can be disabled, remapped, or appropriately focus-scoped.</p>
+          <p class="source">Evidence: <code>index.html:19, 39&ndash;45</code>; <code>app.js:66&ndash;93, 174&ndash;182</code>; <code>styles.css:62&ndash;65, 232&ndash;264, 380&ndash;425</code>. Contrast values use sRGB conversion of computed solid colors; striped and anti-aliased pixels were not fully audited. Confidence: high.</p>
+        </article>
+
+        <article class="finding" id="f6">
+          <h3><span class="priority p2">P2</span> Make difficulty mean something consistent</h3>
+          <p><strong>Observed:</strong> “Mediu” ranges from concrete animals and recognizable objects to <span lang="ro">Nostalgie, Telepatie, Documentar</span>, and <span lang="ro">Kinetoterapeut</span>. Meanwhile, the easy deck contains near-neighbor berries and specialized percussion instruments. Recognizing the word, knowing what it looks like, and distinguishing it from the other six are three different challenges.</p>
+          <p><strong>Why it matters:</strong> the difficulty selector promises a predictable experience. Right now, selecting medium can change the kind of challenge as much as its intensity. Some groups will experience this as arbitrary rather than funny or competitive.</p>
+          <p><strong>Recommendation:</strong> curate each card on vocabulary familiarity, drawability, and distinguishability within its seven-word set. Keep two visible difficulty choices initially; do not expand the interface into a large taxonomy. Move or rewrite problematic cards after a small playtest, and make abstract/specialist packs opt-in only if demand justifies them.</p>
+          <p class="accept"><strong>Done when:</strong> each card has an editorial rationale for its level, and test groups report a reasonably consistent challenge within that level. Unknown-word frequency and “impossible to distinguish” complaints should be recorded separately.</p>
+          <p class="source">Evidence: all 100 cards in <code>data.js</code>, especially “Fructe de pădure,” “Instrumente de percuție,” “Stări sufletești,” “Planete,” “Personaje SF,” and “Profesii din spital.” Difficulty judgments are editorial hypotheses until playtested. Confidence: medium.</p>
+        </article>
+
+        <article class="finding" id="f7">
+          <h3><span class="priority p2">P2</span> Optimize for fresh sessions, not endless random clicking</h3>
+          <p><strong>Observed:</strong> there are exactly 50 easy and 50 medium cards, with fixed word order. The picker avoids the same card in the same slot immediately, but maintains no session history. A card can return soon, and a theme from the previous board can move into a different column during an all-card deal.</p>
+          <p><strong>Why it matters:</strong> extending replayability is the product's core purpose. A continually refreshable board is not an infinite content supply. With three easy cards per round, even perfect no-repeat scheduling must reuse a card by round 17; the current independent random draws can repeat much earlier.</p>
+          <p><strong>Recommendation:</strong> use a session-aware shuffled queue per difficulty, while still enforcing cross-column compatibility. Make “new cards” a board-level transaction that excludes all three previous cards when possible. Defer conflicting cards rather than consuming them invisibly. Add a restrained progress/exhaustion message in setup, not a permanent game-screen statistic.</p>
+          <p>Only consider randomizing row order between rounds after playtesting and confirming the intended game variant. It must never change during an active round; it is not a substitute for better content.</p>
+          <p class="accept"><strong>Done when:</strong> recent cards do not return unexpectedly, eligible deck exhaustion is explicit, and the user can intentionally reset a session. Difficulty changes do not silently reinterpret an old numeric card index as a different card's identity.</p>
+          <p class="source">Evidence: <code>app.js:16, 33&ndash;44, 83&ndash;87, 138&ndash;140</code>; fixed arrays in <code>data.js</code>. In the seeded all-easy simulation, 618 of 10,000 redeals retained a prior-board theme somewhere; that is not the same as repeating it in the same slot. Confidence: high.</p>
+        </article>
+
+        <article class="finding" id="f8">
+          <h3><span class="priority p2">P2</span> Tell the host whether fullscreen and wake prevention worked</h3>
+          <p><strong>Observed:</strong> fullscreen and screen wake lock succeeded in the tested Chromium session. Their rejection paths, however, deliberately ignore errors. Simulated denial produced no visible message or status text. The fullscreen button still says <span lang="ro">“Ecran complet”</span> after entering fullscreen.</p>
+          <p><strong>Why it matters:</strong> “the shared board stays awake” is a core promise. Silent failure makes the host discover a device limitation only when the screen dims or the button appears broken.</p>
+          <p><strong>Recommendation:</strong> reflect the actual fullscreen state with an exit label and matching icon. Show a small, non-blocking status only when necessary: wake prevention active, unavailable, or released. Handle unsupported APIs and denied permissions differently where there is useful recovery guidance. Avoid turning a low-risk limitation into a modal interruption.</p>
+          <p class="accept"><strong>Done when:</strong> rejected or unsupported APIs produce an accurate message; the label follows fullscreen entry/exit, including Escape; returning to the tab updates wake status without accumulating redundant requests.</p>
+          <p class="source">Evidence: <code>app.js:145&ndash;164, 185</code>; <code>index.html:24</code>. API denial was injected in an isolated browser context, not a natural failure on the user's device. Safari/iOS behavior was not tested. Confidence: high for silent handling; device coverage remains open.</p>
+        </article>
+
+        <article class="finding" id="f9">
+          <h3><span class="priority p2">P2</span> Make offline behavior and font fallback genuinely dependable</h3>
+          <p><strong>Observed:</strong> dealing continues if the already-loaded page loses its connection. A reload while offline failed in the fresh test context. There is no service worker or offline application cache strategy. The visual system also requests Oswald and DM Sans from Google Fonts.</p>
+          <p><strong>Failure case:</strong> blocking the font hosts at 320 &times; 568 caused <span lang="ro">“Broască țestoasă”</span> to occupy approximately 72.75px vertically in a 59.94px row. The intended-font sweep had no such overrun. Fallback type therefore affects more than appearance; it can cross row boundaries.</p>
+          <p><strong>Recommendation:</strong> self-host the necessary font files with their license notices, and select a fallback whose metrics are deliberately tested. If opening/reloading offline is a requirement, cache the complete small app shell, fonts, and data with a versioned update policy. Keep the active board stable when an update arrives; offer updates between rounds.</p>
+          <p class="accept"><strong>Done when:</strong> the documented offline promise matches behavior; a previously prepared installation can open offline if that is the promise; blocked or delayed fonts cannot cause word overlap; an update never replaces an active round.</p>
+          <p class="source">Evidence: <code>index.html:9&ndash;11</code>; <code>styles.css:43&ndash;53, 319&ndash;335</code>; offline reload and font-host failure experiments. A locally saved complete folder is a separate distribution model from a cached hosted website. Confidence: high.</p>
+        </article>
+
+        <article class="finding" id="f10">
+          <h3><span class="priority p3">P3</span> Refine the hierarchy without diluting the identity</h3>
+          <p><strong>Observed:</strong> the colored headers already establish a strong hierarchy, but the diagonal medium-difficulty pattern covers the full header, including the letter/category area. It competes with the stable column color. Setup controls remain visible throughout play, while category labels are tiny even on large screens.</p>
+          <p><strong>Recommendation:</strong> retain the saturated column colors and bold word typography. Confine the medium pattern to a small redundant difficulty marker or a quieter header zone, keeping the selected “Mediu” label explicit. Make category names easier to read in setup. If active-round locking is introduced, use that state to reduce control emphasis rather than adding another toolbar.</p>
+          <p>Preserve the alternating row bands: they help tracking. Tune separator visibility on the actual display rather than increasing contrast indiscriminately. Test whether a slightly more prominent number gutter improves coordinate lookup more than making every word larger.</p>
+          <p class="accept"><strong>Done when:</strong> players identify the column and row before noticing setup controls, while hosts can still change settings quickly between rounds. Compare variants in the same lighting and at the same viewing distance.</p>
+          <p class="source">Evidence: desktop and tablet screenshots; <code>styles.css:198&ndash;207, 267&ndash;277, 291&ndash;335</code>. This is design judgment, not a measured task-performance result. Confidence: medium.</p>
+        </article>
+      </section>
+
+      <section id="content">
+        <h2>Content and Romanian copy</h2>
+        <p>The content is not a secondary concern here: <strong>the words are the product.</strong> There is already enough material for a useful first release. Improve the consistency and combination rules before rapidly expanding the deck.</p>
+        <div class="table-wrap">
+          <table>
+            <caption>What is actually in the deck</caption>
+            <thead><tr><th scope="col">Measure</th><th scope="col">Result</th><th scope="col">Interpretation</th></tr></thead>
+            <tbody>
+              <tr><td>Cards</td><td>100: 50 easy + 50 medium</td><td>A finite authored library, not generated infinite content.</td></tr>
+              <tr><td>Prompt entries</td><td>700</td><td>Every card contains exactly seven entries.</td></tr>
+              <tr><td>Distinct labels</td><td>631</td><td>Unicode-normalized, Romanian lowercase comparison.</td></tr>
+              <tr><td>Labels appearing more than once</td><td>61</td><td>69 entries beyond the first occurrence; these are different counts.</td></tr>
+              <tr><td>Overlapping card pairs within a difficulty</td><td>40</td><td>Not 40 invalid boards; these are pairs that share at least one exact word.</td></tr>
+              <tr><td>Largest same-level overlap</td><td>4 of 7 prompts</td><td>The two pet/small-house-animal cards.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <h3>Editorial corrections and candidates for playtesting</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th scope="col">Current card or wording</th><th scope="col">Issue</th><th scope="col">Suggested direction</th></tr></thead>
+            <tbody>
+              <tr><td lang="ro">Insecte &rarr; Păianjen</td><td>A spider is not an insect. This is a category-label mismatch.</td><td>Rename the group to “Insecte și alte nevertebrate,” or replace the spider with a suitable insect and playtest distinctiveness.</td></tr>
+              <tr><td lang="ro">Dinozauri &rarr; Pterodactil</td><td>A pterosaur is not a dinosaur. Familiar everyday usage does not make the category precise.</td><td>“Dinozauri și rudele lor” preserves the approachable vocabulary without teaching the wrong grouping.</td></tr>
+              <tr><td lang="ro">Construcții celebre</td><td>The entries are generic structures: bridge, tunnel, dam, tower, and so on.</td><td>Use “Construcții” or “Tipuri de construcții.” Reserve “celebre” for named landmarks.</td></tr>
+              <tr><td lang="ro">Profesii din spital</td><td>The set includes “Veterinar” and other professions not specifically associated with a human hospital.</td><td>A broader “Profesii medicale” label is more accurate; review whether all seven still form a fair set.</td></tr>
+              <tr><td lang="ro">Planete</td><td>Several planets are hard to distinguish in a fast drawing without learned symbols or specialist knowledge.</td><td>Playtest as a knowledge-heavy pack, replace weakly distinguishable entries, or move the card out of the default medium mix.</td></tr>
+              <tr><td lang="ro">Personaje SF</td><td>“Robot,” “Android,” “Cyborg,” and “Clonă” can require semantic rather than visible distinctions.</td><td>Keep the intentional challenge, but establish that players can express the differences under the group's drawing rules.</td></tr>
+              <tr><td lang="ro">Fructe de pădure / Instrumente de percuție</td><td>Specialist vocabulary and similar silhouettes can make “Ușor” unexpectedly demanding.</td><td>Evaluate familiarity and in-card distinguishability, not just whether the nouns describe physical objects.</td></tr>
+              <tr><td lang="ro">Clătită / Clătite; Gumă / Radieră; Corn / Croissant</td><td>Exact duplicate checks miss inflections, synonyms, and closely related concepts.</td><td>Add editorial concept tags or compatibility notes; do not rely on string equality as the entire curation strategy.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Preserve Romanian diacritics, local cultural references, and the intentional similarity of words within a card. Do not “fix” the game by making every prompt unrelated or equally easy. The aim is <em>drawably different</em>, not unchallenging.</p>
+        <h3>Concrete copy examples</h3>
+        <p>These are proposed strings, not changes already made. Keep help optional and short; do not put all of this on the game board.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th scope="col">Surface</th><th scope="col">Proposed Romanian copy</th><th scope="col">Purpose</th></tr></thead>
+            <tbody>
+              <tr><td>Optional introduction</td><td lang="ro">O tablă de cuvinte pentru jocul de la masă. Trei cărți, câte șapte cuvinte.</td><td>Explain the companion role without claiming a complete digital game.</td></tr>
+              <tr><td>Coordinate help</td><td lang="ro">Ai primit B4? Caută coloana B și cuvântul de pe rândul 4.</td><td>Teach by one concrete example, without prescribing a particular edition's assignment rules.</td></tr>
+              <tr><td>All-card action tooltip</td><td lang="ro">Schimbă toate cele trei cărți</td><td>Clarify scope while keeping “Cărți noi” compact.</td></tr>
+              <tr><td>Difficulty change helper</td><td lang="ro">Schimbarea dificultății aduce o carte nouă.</td><td>Make the consequence explicit during setup.</td></tr>
+              <tr><td>Undo status</td><td lang="ro">Cartea B a fost schimbată. Anulează</td><td>Name the changed object and offer recovery.</td></tr>
+              <tr><td>Locked board</td><td lang="ro">Tabla este blocată pentru rundă. Deblochează tabla</td><td>Explain why controls cannot change it.</td></tr>
+              <tr><td>Fullscreen exit</td><td lang="ro">Ieși din ecran complet</td><td>Make the action match the actual state.</td></tr>
+              <tr><td>Unavailable wake prevention</td><td lang="ro">Ecranul se poate stinge automat. Verifică setarea de blocare a dispozitivului.</td><td>Give useful recovery guidance without claiming protection is active.</td></tr>
+              <tr><td>Phone guidance</td><td lang="ro">Pentru a citi de la distanță, folosește o tabletă sau un laptop. Pe telefon, încearcă orientarea peisaj.</td><td>Set realistic expectations; landscape is a suggestion, not a guarantee.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <h3>Small supporting documentation improvements</h3>
+        <p>The README currently contains only the repository name. Add the purpose, the finite deck inventory, the local-start command, supported display expectations, and the precise offline behavior. If the site is published for strangers, add concise project authorship, content provenance, and an unofficial-companion clarification where appropriate. Link to the appropriate publisher rules rather than copying a rulebook or implying that this app handles the whole game.</p>
+      </section>
+
+      <section id="responsive">
+        <h2>Responsive and failure-state evidence</h2>
+        <p>The baseline sweep rendered every existing card in all three positions, with animation disabled and fonts ready: <strong>2,100 word placements per viewport, 14,700 across seven sizes.</strong> It checked row-boundary overrun and horizontal word overflow. No overrun was detected in that baseline. This checks geometry, not whether a person can read quickly at a metre.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th scope="col">Viewport</th><th scope="col">Word size</th><th scope="col">Number size</th><th scope="col">Words needing wrapping*</th><th scope="col">Practical reading</th></tr></thead>
+            <tbody>
+              <tr><td class="compact">1440 &times; 900</td><td>39.60px</td><td>26.93px</td><td>0</td><td>The clearest tested desktop layout.</td></tr>
+              <tr><td class="compact">1024 &times; 768</td><td>33.79px</td><td>22.98px</td><td>4</td><td>Strong baseline for a shared tablet; controls remain small.</td></tr>
+              <tr><td class="compact">768 &times; 1024</td><td>26.88px</td><td>18.28px</td><td>9</td><td>Portrait tablet trades reading scale for vertical space.</td></tr>
+              <tr><td class="compact">720 &times; 450</td><td>22.05px</td><td>14.99px</td><td>0</td><td>Compact landscape; themes are hidden.</td></tr>
+              <tr><td class="compact">390 &times; 844</td><td>19.11px</td><td>11.47px</td><td>57</td><td>Close-up phone view, not a credible one-metre promise.</td></tr>
+              <tr><td class="compact">320 &times; 568</td><td>15.68px</td><td>9.41px</td><td>70</td><td>Smallest and least comfortable coordinate reading.</td></tr>
+              <tr><td class="compact">844 &times; 390</td><td>19.11px</td><td>12.99px</td><td>0</td><td>Longer lines, but words are not larger than at 390px portrait.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="source">*Prompt entries out of 700, not unique vocabulary labels; all three identical placements were counted and divided by three. Wrapping is not itself a defect. All baseline wraps were at most two lines. The 720 &times; 450 check is a viewport check, not a verified browser-zoom test.</p>
+        <div class="phones">
+          <figure>
+            <a href="screenshots/03-phone-portrait.png"><img loading="lazy" src="screenshots/03-phone-portrait.png" alt="At 390 pixels wide, the three columns remain visible, but numbers are small, themes are absent, and longer Romanian words split across lines." width="390" height="844"></a>
+            <figcaption><strong>390 &times; 844, intended fonts.</strong> Existing long-word cards were deliberately selected for inspection. The grid fits, but the coordinate indices are small and category context is absent.</figcaption>
+          </figure>
+          <figure>
+            <a href="screenshots/04-phone-fonts-blocked.png"><img loading="lazy" src="screenshots/04-phone-fonts-blocked.png" alt="At 320 pixels wide with Google Fonts blocked, fallback typography makes Broască țestoasă spill beyond its row band." width="320" height="568"></a>
+            <figcaption><strong>320 &times; 568, font requests blocked.</strong> This is a failure-state fixture, not the default appearance. “Broască țestoasă” exceeded its row band in both cards containing that entry.</figcaption>
+          </figure>
+        </div>
+        <figure>
+          <a href="screenshots/06-tablet-controls.png"><img loading="lazy" src="screenshots/06-tablet-controls.png" alt="Tablet layout at 1024 by 768 with the medium difficulty control focused, showing the colored header, small difficulty controls, and dense striped state." width="1024" height="768"></a>
+          <figcaption>Tablet, 1024 &times; 768. The focused medium selector demonstrates why a light outline needs a darker companion when used on a light colored header.</figcaption>
+        </figure>
+      </section>
+
+      <section id="journey">
+        <h2>The player experience</h2>
+        <h3>Cognitive load: simple overall, fragile at the wrong moments</h3>
+        <p>The 3 &times; 7 structure is intrinsic to the task. Do not reduce it to four items just to follow a generic UX rule. All 21 choices need to coexist so players can compare drawings against the board. Spatial grouping and repeated coordinates already do most of the work.</p>
+        <p>The unnecessary load comes from managing an active round: remembering what was there before an accident, inferring hidden themes, interpreting abstract prompts, and deciding whether the screen will stay awake. Eleven visible buttons are not automatically too many; keeping all the <em>board-changing</em> buttons active during drawing is the more consequential issue.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th scope="col">Player</th><th scope="col">Journey</th><th scope="col">Likely friction</th></tr></thead>
+            <tbody>
+              <tr><td>Experienced host</td><td>Opens the board, adjusts difficulty, deals, then reaches across the table between rounds.</td><td>Fast setup works. Small targets, no round lock, and no undo make a mistaken reach costly.</td></tr>
+              <tr><td>First-time guest</td><td>Looks for B4, then tries to interpret the requested word.</td><td>No coordinate example or scope explanation; hidden phone themes make ambiguous words harder to interpret.</td></tr>
+              <tr><td>Player reading from farther away</td><td>Glances up while drawing, using color, letter, and number to find a row.</td><td>Strong desktop contrast helps. Small mobile numbers and split words slow recognition; actual physical testing is still needed.</td></tr>
+              <tr><td>Keyboard or assistive-technology user</td><td>Tabs through controls or opens a list of buttons.</td><td>Real controls and regions help, but repeated button names, weak header focus, and global character shortcuts introduce ambiguity.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>Emotional arc:</strong> the initial board feels immediate and confident; the best moment is quickly spotting the right word; the worst moments are an unexplained duplicate, an accidental redraw, or losing the screen mid-round. Prioritize those valleys before adding celebratory animations.</p>
+        <h3>Heuristic scorecard</h3>
+        <p>This is a structured expert judgment, not a validated usability score or accessibility certification. Scale: 0 absent/broken, 1 weak, 2 partial, 3 good, 4 excellent. All ten heuristics apply to this interactive tool.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th scope="col">Heuristic</th><th scope="col">Score</th><th scope="col">Reason</th></tr></thead>
+            <tbody>
+              <tr><td>Visibility of system status</td><td>2/4</td><td>Selected difficulty and dealing feedback exist; fullscreen/wake failures are silent.</td></tr>
+              <tr><td>Match with the real world</td><td>3/4</td><td>Romanian labels and A/B/C + 1&ndash;7 are natural; categories and difficulty need curation.</td></tr>
+              <tr><td>User control and freedom</td><td>1/4</td><td>Board-changing actions are immediate and irreversible; reload loses the active board.</td></tr>
+              <tr><td>Consistency and standards</td><td>3/4</td><td>Repeated columns and controls behave consistently; fullscreen labeling and names need work.</td></tr>
+              <tr><td>Error prevention</td><td>2/4</td><td>Duplicate themes and immediate same-slot repeats are prevented; duplicated prompts and accidental dealing are not.</td></tr>
+              <tr><td>Recognition rather than recall</td><td>3/4</td><td>Everything is visible on a stable grid; hidden themes and smaller indices weaken the phone layout.</td></tr>
+              <tr><td>Flexibility and efficiency</td><td>3/4</td><td>Independent dealing, keyboard shortcuts, and saved difficulty are useful; shortcut control is missing.</td></tr>
+              <tr><td>Aesthetic and minimalist design</td><td>3/4</td><td>A distinctive, restrained board; medium stripes and permanent setup controls can be quieter.</td></tr>
+              <tr><td>Error recovery</td><td>1/4</td><td>No board restoration or useful capability-failure messages.</td></tr>
+              <tr><td>Help and documentation</td><td>1/4</td><td>A small shortcut hint, but no optional first-use explanation or meaningful README.</td></tr>
+              <tr><td><strong>Total</strong></td><td><strong>22/40</strong></td><td><strong>A strong visual foundation with substantial round-safety and recovery gaps.</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="roadmap">
+        <h2>A focused improvement sequence</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th scope="col">Order</th><th scope="col">Work package</th><th scope="col">Relative effort</th><th scope="col">Expected outcome</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>Stable card IDs, active-board persistence, and one-step undo</td><td>Medium</td><td>Rounds survive reloads and mistaken actions. Establishes the state model needed for history.</td></tr>
+              <tr><td>2</td><td>Compatible board selection and targeted duplicate-content curation</td><td>Medium</td><td>The 21 visible prompts remain distinct without breaking themed cards.</td></tr>
+              <tr><td>3</td><td>Touch targets, header focus, unique labels, and shortcut controls</td><td>Small&ndash;medium</td><td>Immediate usability and accessibility gains without a visual redesign.</td></tr>
+              <tr><td>4</td><td>Table-display/locked-round state, stronger indices, and phone guidance</td><td>Medium</td><td>Preparation becomes clearly separate from stable shared viewing.</td></tr>
+              <tr><td>5</td><td>Visible capability status, self-hosted fonts, fallback layout checks</td><td>Small&ndash;medium</td><td>The board behaves predictably on less cooperative devices and connections.</td></tr>
+              <tr><td>6</td><td>Difficulty rubric, session-aware shuffle, optional help, and README</td><td>Medium; includes playtesting</td><td>More consistent content, less repetition, and clearer expectations.</td></tr>
+              <tr><td>7</td><td>Offline installation/update strategy, if required</td><td>Medium</td><td>A complete offline promise, not merely “works after loading.”</td></tr>
+              <tr><td>8</td><td>Fine typography and difficulty-marker refinement</td><td>Small after testing</td><td>Polish is guided by actual coordinate-reading performance.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p><strong>Do not prioritize yet:</strong> accounts, online multiplayer, a drawing canvas, scoreboards, sounds, a timer, achievements, chat, or a large navigation system. None addresses the observed weaknesses in this deliberately narrow companion. If a future game variant needs them, evaluate it as a separate product decision.</p>
+        <p><strong>Three decisions worth settling before implementation:</strong> which physical screen is the primary shared display; whether “offline” includes closing and reopening the site; and how strict the app should be about synonyms versus identical word strings. These change acceptance criteria more than the color palette does.</p>
+      </section>
+
+      <section id="validation">
+        <h2>Inspected flows and follow-up acceptance tests</h2>
+        <p>The following core flows were exercised against the locally served, unchanged app. Browser mutations were limited to temporary diagnostic states, deterministic card fixtures, API denial, and font/network failure tests.</p>
+        <div class="table-wrap">
+          <table>
+            <caption>Five core flows inspected</caption>
+            <thead><tr><th scope="col">Flow / locator</th><th scope="col">Expected outcome</th><th scope="col">Observed result</th></tr></thead>
+            <tbody>
+              <tr><td>Initial board<br><code>#board .col</code>, <code>.w</code></td><td>Three named columns, seven words each, visible coordinates.</td><td>Pass: 21 words and 11 actionable controls; intended-font layouts fitted tested sizes.</td></tr>
+              <tr><td>Independent and all-card dealing<br><code>.col .deal</code>, <code>#dealAll</code></td><td>Only the selected column changes, or all three change; status confirms scope.</td><td>Pass for basic scope and announcements. No undo; cross-column word collisions remain possible.</td></tr>
+              <tr><td>Difficulty and reload<br><code>[data-diff="mediu"]</code></td><td>Selected column changes difficulty; preference persists.</td><td>Preference persistence passed. All active cards changed on reload.</td></tr>
+              <tr><td>Keyboard and motion<br>Tab, <code>2</code>, <code>R</code>, reduced-motion media</td><td>Controls are reachable; shortcuts have correct scope; reduced motion avoids rotation.</td><td>All 11 controls reachable; <code>2</code> changed B and <code>R</code> dealt all. Reduced-motion words had <code>animation: none</code>; normal animation duration was 0.34s.</td></tr>
+              <tr><td>Display resilience<br><code>#fullscreen</code>, wake lock, offline reload</td><td>Display capabilities work or explain failure; documented offline behavior is dependable.</td><td>Fullscreen and wake lock worked in Chromium. Forced denial was silent. Loaded-page dealing worked offline; reload failed.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <h3>Regression scenarios to implement alongside future changes</h3>
+        <p>These are proposed test cases, not an installed test suite and not claims that the missing features already pass.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th scope="col">Case</th><th scope="col">Action</th><th scope="col">Required assertion</th></tr></thead>
+            <tbody>
+              <tr><td>Board integrity</td><td>Deal across all difficulty combinations and deterministic seeds.</td><td>Always 3 &times; 7 entries, valid card IDs, unique normalized visible prompts, and distinct themes.</td></tr>
+              <tr><td>Single-column scope</td><td>Activate “Carte nouă pentru B.”</td><td>A/C are byte-for-byte unchanged; B changes and remains compatible.</td></tr>
+              <tr><td>Undo</td><td>Deal one, deal all, and change a difficulty; undo each.</td><td>Restore exact words, order, theme, difficulty, and round state.</td></tr>
+              <tr><td>Round lock</td><td>Lock, then activate all deal controls and shortcuts.</td><td>No card changes; disabled state and recovery action are understandable.</td></tr>
+              <tr><td>Persistence</td><td>Reload after setup and during a locked round.</td><td>Restore the same board; invalid or obsolete stored data yields a clear safe recovery.</td></tr>
+              <tr><td>Session novelty</td><td>Consume eligible deck entries with controlled randomness.</td><td>No unexpected repeats; explicit exhaustion; compatibility never silently relaxed.</td></tr>
+              <tr><td>Shortcut safety</td><td>Disable shortcuts, hold R, and use assistive-technology-style navigation.</td><td>Disabled shortcuts do nothing; repeat does not accidentally consume multiple rounds; normal keyboard activation still works.</td></tr>
+              <tr><td>Accessible control identity</td><td>Inspect names and tab order without visual context.</td><td>Each control identifies its column; groups are named; current difficulty and fullscreen state are exposed.</td></tr>
+              <tr><td>Focus and targets</td><td>Measure all states at desktop/tablet/phone breakpoints.</td><td>Product target sizes are met; focus is visible on solid and patterned backgrounds.</td></tr>
+              <tr><td>Longest prompts</td><td>Render all 100 cards at the seven recorded viewports.</td><td>No overlap, clipping, or lost coordinates; repeat with actual zoom and text enlargement.</td></tr>
+              <tr><td>Font fallback</td><td>Block and delay web font requests.</td><td>No row overrun or unreadable diacritics; “Broască țestoasă” is a required fixture.</td></tr>
+              <tr><td>Capabilities</td><td>Reject fullscreen/wake requests; release wake lock; return to tab.</td><td>Visible truthful status and recovery guidance; no leaked or redundant wake state.</td></tr>
+              <tr><td>Offline and updates</td><td>Prepare online, close, reopen offline, then receive a newer version.</td><td>Behavior matches the stated promise; active rounds remain stable through updates.</td></tr>
+              <tr><td>Real-device table reading</td><td>Play on target hardware under evening light and oblique viewing angles.</td><td>Players locate random coordinates without leaning in; record lookup errors and troublesome prompts.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="method">
+        <h2>Method, provenance, and limitations</h2>
+        <p class="method">The single-context notice refers only to the design skill's independent-review protocol, not to whether the website was actually run. Source inspection, real browser interactions, geometry checks, and the automated design detector were performed.</p>
+        <p><strong>Version:</strong> the original local checkout contained only the initial README. Following the clarification to review the latest local/remote main containing <code>4a1fa36</code>, local main was fast-forwarded to <code>59a2e1b43325faa533a4da5e9d9ce33149d843ac</code>. Remote main matched that SHA when checked. No application code, content data, styles, or project settings were edited.</p>
+        <p><strong>Read:</strong> <code>PRODUCT.md</code>, <code>README.md</code>, all of <code>index.html</code>, <code>styles.css</code>, <code>app.js</code>, and all 100 cards in <code>data.js</code>. The product brief, not a generic visual template, supplied the design criteria.</p>
+        <p><strong>Run:</strong> a loopback-only local static server served the unchanged repository at <code>http://127.0.0.1:4173</code>. Browser inspection used Chromium <code>153.0.8010.48</code>. Startup required no dependency installation. For a later manual run from the repository root on this machine: <code>py -3 -m http.server 4173 --bind 127.0.0.1</code>.</p>
+        <p><strong>Automated design scan:</strong> the bundled static detector returned <code>[]</code> for <code>index.html</code>; its browser script was also injected into a separate diagnostic page and reported “No anti-patterns found.” This is a narrow style-pattern signal, not proof of accessibility, gameplay correctness, or responsive usability. It did not catch the manually measured control, state, or content issues. No persistent diagnostic overlay is part of this deliverable.</p>
+        <p><strong>Simulation:</strong> the app's actual <code>pickIndex()</code> was exercised with a deterministic linear-congruential random stream seeded at <code>20260920</code>, across 10,000 sequential boards for each of three difficulty configurations. Browser state and the original random function were restored afterward. Percentages are sample outcomes, not universal probabilities.</p>
+        <p><strong>Limitations:</strong> this was not a full security review, formal WCAG audit, actual screen-reader session, Safari/iOS/Firefox device test, color-vision simulation, or live group playtest. Physical reading at a metre, glare, browser zoom, operating-system text scaling, and long-duration battery/wake behavior remain unverified. No conclusions about production hosting, analytics, SEO performance, or real-world conversion are implied.</p>
+        <p><strong>Evidence packaging:</strong> screenshots and <a href="evidence.json">the structured evidence file</a> sit beside this HTML. The review uses no external styles, scripts, or fonts and can be opened directly from disk. It is also printable from the browser.</p>
+        <details>
+          <summary>Report-format checks</summary>
+          <p>The report was checked at desktop and phone widths. Images and internal links resolved; wide tables scroll inside their own containers rather than overflowing the page. A missing report favicon request was eliminated.</p>
+          <p>Two report-only style warnings were reviewed and left unchanged as contextual false positives. The type detector missed the heading shorthand: measured sizes are 67.2px for the main title, 36px for section headings, and 17px for body copy on desktop. The prose detector flagged short contrastive statements used to distinguish observed behavior, untested claims, and recommendations; those distinctions are intentional evidence calibration.</p>
+        </details>
+        <footer>
+          <p>Evaluation completed on 20 September 2026. Findings distinguish observed behavior, controlled failure experiments, and design/editorial recommendations. No recommended application changes have been implemented.</p>
+          <a href="#verdict">Back to the verdict</a>
+        </footer>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,154 @@
+{
+  "reviewDate": "2026-09-20",
+  "repository": "psticea/game-pictomania",
+  "branch": "main",
+  "commit": "59a2e1b43325faa533a4da5e9d9ce33149d843ac",
+  "includesRequestedCommit": "4a1fa36f2b77c6729cbee08594722c06559881cd",
+  "applicationFilesModified": false,
+  "assessmentMode": "Direct single-context source and browser assessment, followed by static and browser design detectors; not an independent dual-agent assessment.",
+  "browser": "Chromium 153.0.8010.48",
+  "localUrlDuringReview": "http://127.0.0.1:4173",
+  "startCommandWindows": "py -3 -m http.server 4173 --bind 127.0.0.1",
+  "content": {
+    "easyCards": 50,
+    "mediumCards": 50,
+    "wordEntries": 700,
+    "normalizedDistinctLabels": 631,
+    "distinctLabelsRepeated": 61,
+    "entriesBeyondFirstOccurrence": 69,
+    "invalidCardWordCounts": 0,
+    "withinDifficultyOverlappingCardPairs": 40,
+    "worstOverlap": {
+      "themes": ["Animale de companie", "Animale mici de casă"],
+      "words": ["Hamster", "Broască țestoasă", "Iepure", "Peștișor"]
+    }
+  },
+  "selectionSimulation": {
+    "method": "Actual pickIndex() run on sequential boards; global Math.random temporarily replaced with LCG, original function and state restored.",
+    "lcg": {
+      "initialSeed": 20260920,
+      "multiplier": 1664525,
+      "increment": 1013904223,
+      "modulus": 4294967296,
+      "seedResetBetweenConfigurations": false
+    },
+    "caveat": "Synthetic sample outcomes, not measured player incidence or exact mathematical probabilities.",
+    "runs": [
+      {"difficulties": ["usor", "usor", "usor"], "boards": 10000, "boardsWithDuplicatePrompts": 672, "boardsWithAnyPriorBoardTheme": 618},
+      {"difficulties": ["mediu", "mediu", "mediu"], "boards": 10000, "boardsWithDuplicatePrompts": 277, "boardsWithAnyPriorBoardTheme": 622},
+      {"difficulties": ["usor", "mediu", "usor"], "boards": 10000, "boardsWithDuplicatePrompts": 414, "boardsWithAnyPriorBoardTheme": 200}
+    ]
+  },
+  "layoutSweep": {
+    "method": "All 100 cards rendered in each of 3 positions per viewport; reduced motion, document.fonts.ready, bounding-rectangle row checks and scrollWidth checks.",
+    "wordPlacementsPerViewport": 2100,
+    "totalWordPlacements": 14700,
+    "physicalDistanceTested": false,
+    "browserZoomTested": false,
+    "viewports": [
+      {"width": 1440, "height": 900, "wordPx": 39.6, "indexPx": 26.928, "wrappedPlacements": 0, "overflowPlacements": 0},
+      {"width": 1024, "height": 768, "wordPx": 33.792, "indexPx": 22.9786, "wrappedPlacements": 12, "overflowPlacements": 0},
+      {"width": 768, "height": 1024, "wordPx": 26.88, "indexPx": 18.2784, "wrappedPlacements": 27, "overflowPlacements": 0},
+      {"width": 720, "height": 450, "wordPx": 22.05, "indexPx": 14.994, "wrappedPlacements": 0, "overflowPlacements": 0},
+      {"width": 390, "height": 844, "wordPx": 19.11, "indexPx": 11.466, "wrappedPlacements": 171, "overflowPlacements": 0},
+      {"width": 320, "height": 568, "wordPx": 15.68, "indexPx": 9.408, "wrappedPlacements": 210, "overflowPlacements": 0},
+      {"width": 844, "height": 390, "wordPx": 19.11, "indexPx": 12.9948, "wrappedPlacements": 0, "overflowPlacements": 0}
+    ]
+  },
+  "controlMeasurements": {
+    "desktopDifficultyHeightPx": 38,
+    "desktopDealWidthPx": 44,
+    "desktopDealHeightPx": 38,
+    "phonePortraitDifficultyHeightPx": 32,
+    "phonePortraitDealSizePx": [38, 34],
+    "shortLandscapeDifficultyHeightPx": 30,
+    "projectTargetMinimumPx": 44,
+    "note": "The project's 44px promise differs from WCAG 2.2 AA's 24px minimum-target criterion and its exceptions."
+  },
+  "contrast": {
+    "method": "Computed CSS colors converted to sRGB using canvas; WCAG relative luminance on solid colors; excludes stripe/antialiasing/full focus-area analysis.",
+    "wordOnBase": 16.29,
+    "columnLetterOnHeader": {"A": 10.36, "B": 9.48, "C": 7.55},
+    "focusAgainstSolidHeader": {"A": 1.33, "B": 1.45, "C": 1.82}
+  },
+  "observedFlows": {
+    "initialWords": 21,
+    "tabReachableButtons": 11,
+    "singleDealPreservedOtherColumns": true,
+    "singleDealAnnouncedColumnAndTheme": true,
+    "allDealAnnounced": true,
+    "difficultySurvivedReload": true,
+    "activeBoardSurvivedReload": false,
+    "keyboard2ChangedBOnly": true,
+    "keyboardRDealtAll": true,
+    "fullscreenSucceededInChromium": true,
+    "fullscreenLabelUpdatedAfterEntry": false,
+    "wakeLockAcquiredInChromium": true,
+    "normalWordAnimationSeconds": 0.34,
+    "reducedMotionWordAnimation": "none"
+  },
+  "controlledFailureExperiments": {
+    "fontHostsBlocked": {
+      "width": 320,
+      "height": 568,
+      "hosts": ["fonts.googleapis.com", "fonts.gstatic.com"],
+      "overflowPlacements": 6,
+      "affectedWord": "Broască țestoasă",
+      "affectedCards": ["Animale de companie", "Animale mici de casă"],
+      "wordHeightPx": 72.75,
+      "rowHeightPx": 59.9375
+    },
+    "fullscreenAndWakeLockRejected": {
+      "method": "API methods temporarily rejected in an isolated context.",
+      "visibleErrorMessage": false,
+      "statusText": ""
+    },
+    "offline": {
+      "alreadyLoadedPageCouldDeal": true,
+      "freshContextReloadSucceeded": false,
+      "reloadError": "net::ERR_INTERNET_DISCONNECTED"
+    }
+  },
+  "detector": {
+    "staticTarget": "index.html",
+    "staticFindings": [],
+    "browserInjectionSucceeded": true,
+    "browserMessage": "[impeccable] No anti-patterns found.",
+    "caveat": "Style-pattern detection is not a complete accessibility, usability, gameplay, or responsive audit."
+  },
+  "heuristicScores": {
+    "visibility": 2,
+    "realWorldMatch": 3,
+    "userControl": 1,
+    "consistency": 3,
+    "errorPrevention": 2,
+    "recognition": 3,
+    "efficiency": 3,
+    "minimalism": 3,
+    "errorRecovery": 1,
+    "help": 1,
+    "total": 22,
+    "maximum": 40,
+    "type": "Subjective expert prioritization, not a validated user-study metric."
+  },
+  "appAssetBytesExcludingFontsAndHttpOverhead": 32766,
+  "screenshots": [
+    {"file": "screenshots/01-desktop-initial.png", "viewport": [929, 925], "kind": "Initial random board"},
+    {"file": "screenshots/02-desktop-1440.png", "viewport": [1440, 900], "kind": "Ordinary interactions; mixed difficulty; fullscreen button focused"},
+    {"file": "screenshots/03-phone-portrait.png", "viewport": [390, 844], "kind": "Explicit existing-card fixture for long-word inspection"},
+    {"file": "screenshots/04-phone-fonts-blocked.png", "viewport": [320, 568], "kind": "Font-host failure experiment and existing-card fixture"},
+    {"file": "screenshots/05-duplicate-words.png", "viewport": [1440, 900], "kind": "Explicit compatible-theme fixture demonstrating four repeated labels"},
+    {"file": "screenshots/06-tablet-controls.png", "viewport": [1024, 768], "kind": "Existing-card fixture followed by a real difficulty click and focused medium button"}
+  ],
+  "notTested": [
+    "Physical one-metre reading and oblique viewing angles",
+    "Real screen reader",
+    "Safari, iOS, Firefox, or real touch hardware",
+    "Actual browser zoom and OS text scaling",
+    "Full color-vision simulation or formal WCAG audit",
+    "Long-duration wake lock and battery behavior",
+    "Live group playtesting and difficulty calibration",
+    "Production deployment, hosting, analytics, or performance metrics",
+    "Security review"
+  ]
+}

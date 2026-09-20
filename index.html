@@ -11,23 +11,49 @@
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=DM+Sans:opsz,wght@9..40,500;9..40,700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
+<body class="font-fallback">
   <header class="bar">
     <h1 class="wordmark">Pictomania</h1>
 
-    <div class="bar-actions">
-      <p class="hint" aria-hidden="true"><kbd>1</kbd><kbd>2</kbd><kbd>3</kbd> o carte · <kbd>R</kbd> toate</p>
-      <button id="dealAll" class="btn btn-primary" type="button">
-        <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.6M20 4v4h-4"/></svg>
-        Cărți noi
+    <div class="round-actions">
+      <div class="setup-actions">
+        <p class="hint"><kbd>1</kbd><kbd>2</kbd><kbd>3</kbd> o carte · <kbd>R</kbd> toate</p>
+        <button id="dealAll" class="btn btn-primary" type="button">
+          <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.6M20 4v4h-4"/></svg>
+          Cărți noi
+        </button>
+        <button id="undo" class="btn btn-ghost" type="button" disabled>Anulează</button>
+      </div>
+      <span id="roundState" class="round-state">Pregătire</span>
+      <button id="lock" class="btn btn-ghost" type="button" aria-pressed="false">
+        <span id="lockLabel">Blochează</span><span class="desktop-label">tabla</span>
       </button>
+    </div>
+    <div class="display-actions">
+      <button id="tableView" class="btn btn-ghost" type="button" aria-pressed="false" title="Mărește afișajul și blochează tabla pentru rundă">Vedere de masă</button>
       <button id="fullscreen" class="btn btn-ghost" type="button" aria-label="Ecran complet" title="Ecran complet (F)">
         <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
       </button>
     </div>
   </header>
 
-  <main class="board" id="board"><!-- coloanele A/B/C sunt injectate din app.js --></main>
+  <div class="messages">
+    <p class="phone-guidance">Telefon: vedere de aproape. Pentru citit de la distanță, folosește o tabletă sau un laptop.</p>
+    <details id="storageWarning" role="status" hidden>
+      <summary>Tabla nu este salvată — detalii</summary>
+      <div class="notice-panel">
+        <p>Tabla nu poate fi salvată în acest browser. Nu reîncărca pagina în timpul rundei.</p>
+        <button id="retrySave" class="btn btn-ghost" type="button">Reîncearcă salvarea</button>
+      </div>
+    </details>
+    <div id="notice" class="notice" role="alert" hidden>
+      <span id="noticeText"></span>
+      <button id="resetBoard" class="btn btn-ghost" type="button" hidden>Începe o tablă nouă</button>
+      <button id="dismissNotice" class="btn btn-ghost" type="button">Am înțeles</button>
+    </div>
+  </div>
+
+  <main class="board" id="board" hidden><!-- coloanele A/B/C sunt injectate din app.js --></main>
 
   <div id="live" class="sr-only" role="status" aria-live="polite"></div>
 
@@ -35,6 +61,7 @@
     <section class="col">
       <header class="col-head">
         <span class="col-letter"></span>
+        <span class="col-difficulty"></span>
         <div class="col-tools">
           <div class="seg" role="group">
             <button type="button" class="seg-btn" data-diff="usor">Ușor</button>
@@ -51,6 +78,7 @@
   </template>
 
   <script src="data.js"></script>
+  <script src="game.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
